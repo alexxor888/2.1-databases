@@ -1,15 +1,10 @@
 from django.db import models
-
+from autoslug import AutoSlugField
 
 class Phone(models.Model):
-    objects = None
-    id = models.IntegerField(primary_key=True)
-    name = models.CharField(max_length=60, null=False)
-    image = models.URLField(default=None)
-    price = models.IntegerField(default=None)
-    release_date = models.DateField(default=None)
-    lte_exists = models.BooleanField(default=None)
-    slug = models.SlugField(default=None)
-
-    def __str__(self):
-        return f'{self.id}. {self.name}'
+    name = models.TextField('Имя', null=False)
+    price = models.IntegerField('Цена')
+    image = models.ImageField(upload_to='images', verbose_name='Изображение')
+    release_date = models.DateField('Дата релиза')
+    lte_exists = models.BooleanField()
+    slug = AutoSlugField(populate_from='name')
